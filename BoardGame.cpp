@@ -57,6 +57,8 @@ void BoardGame::startGame()
 	list<Player>::iterator it = _players.begin();
 	int turns_counter = 0;
 	while (true) {
+		if (it == _players.end())
+			it = _players.begin();
 		if(playTurn(*it)){
 			cout << (*it).getName() << " Won!" << endl;
 			break;
@@ -69,6 +71,7 @@ void BoardGame::startGame()
 		
 		printBoard();
 		turns_counter++;
+		it++;
 	}
 }
 
