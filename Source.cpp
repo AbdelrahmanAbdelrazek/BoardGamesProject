@@ -9,6 +9,7 @@ void main() {
 	Player p1 = Player("TikTak", '#');
 	Player player_arr[2] = { p0, p1 };
 	
-	BoardGame *b = new Connect4Game(5, 3, 3, list<Player>(player_arr, player_arr+2));
+	BoardGame *b = new Connect4Game(5, 5,list<Player>(player_arr, player_arr+2));
 	b->startGame();
+	system("pause");
 }

@@ -17,7 +17,8 @@ protected:
 	int _board_height;
 	int _no_consecutive_markers_to_win; //number of consecutive markers (horizontal, vertical or diagonal) needed to win
 	bool virtual playTurn(Player player) = 0;
-	bool hasWonDiagonaly(int x, int y);
+	bool hasWonDiagonalyLeft(int x, int y);
+	bool hasWonDiagonalyRight(int x, int y);
 	bool hasWonVertically(int x, int y);
 	bool hasWonHorizontally(int x, int y);
 public:

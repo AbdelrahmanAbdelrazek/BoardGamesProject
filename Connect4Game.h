@@ -4,8 +4,11 @@ class Connect4Game : public BoardGame
 {
 private:
 	bool virtual playTurn(Player p);
+	vector<int> _columns_counters;
 public:
 	Connect4Game(int width, int height, list<Player> players)
-		:BoardGame(width, height, 4, players) {}
+		:BoardGame(width, height, 4, players) {
+		_columns_counters = vector<int>(width);
+	}
 };
 
