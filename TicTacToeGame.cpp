@@ -1,5 +1,5 @@
 #include "TicTacToeGame.h"
-
+#include "Input.h"
 
 bool TicTacToeGame::playTurn(Player p)
 {
@@ -9,7 +9,7 @@ bool TicTacToeGame::playTurn(Player p)
 TRYAGAIN:
 	//X-Coordinate
 	cout <<"Enter the X-Coordinate of where you wish to place your marker: ";
-	cin >> Xposition;
+	Xposition = getInt();
 	Xposition -= 1;
 	if (Xposition + 1 > _board_height || Xposition < 0)
 	{
@@ -18,7 +18,7 @@ TRYAGAIN:
 	}
 	//Y-Coordinate
 	cout << "Enter the Y-Coordinate of where you wish to place your marker: ";
-	cin >> Yposition;
+	Yposition = getInt();
 	Yposition -= 1;
 	if (Yposition + 1 > _board_width || Yposition < 0) {
 		cout << "Invalid Y-Coordinate, try again! " << endl;

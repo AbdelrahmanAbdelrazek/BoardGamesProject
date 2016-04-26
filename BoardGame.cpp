@@ -138,23 +138,31 @@ MoveLeftAndCheck:
 
 void BoardGame::printBoard()
 {
+	const int SPACING = 4;
+	int x = board.size() > 9;
+
+	cout << endl << endl;
 	for (int row = _board_height - 1; row >= 0; row--) {
+		cout << string(SPACING, ' ');
 		//print line
-		cout << string(_board_width * 4 + 2, '-') << endl;
+		cout << string((_board_width * 4 + 3), '-') << endl;
 		//print row
-		cout << row + 1 << '|';
+		cout << string(SPACING, ' ');
+		cout << (row < 9? " " : "")  << row + 1 << '|';
 		for (int column = 0; column < _board_width; column++) {
-			cout << ' ' << board[column][row] << " |";
+			cout << " " << board[column][row] << " |";
 		}
 		cout << endl;
 	}
 
 	//print column numbers
-	cout << string(_board_width * 4 + 2, '-') << endl;
-	cout << " |";
+	cout << string(SPACING, ' ');
+	cout << string((_board_width * 4 + 3), '-') << endl;
+	cout << string(SPACING, ' ');
+	cout << "  |";
 	for (int i = 0; i < _board_width; i++)
-		cout << " " << i + 1 << " |";
-	cout << endl;
+		cout << " " << i + 1 << (i < 9 ? " " : "")  << "|";
+	cout << endl << endl;
 }
 
 void BoardGame::startGame()

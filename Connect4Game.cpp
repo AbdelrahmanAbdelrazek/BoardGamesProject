@@ -1,5 +1,5 @@
 #include "Connect4Game.h"
-
+#include "Input.h"
 
 bool Connect4Game::playTurn(Player p)
 {
@@ -8,7 +8,7 @@ bool Connect4Game::playTurn(Player p)
 TRYAGAIN:
 	cout << "Enter the column number where you wish to place your marker: ";
 	int column;
-	cin >> column;
+	column = getInt();
 	column--;
 	//check if player input is valid(within the board and the column is not full)
 	if (column >= _board_width || column < 0) {
