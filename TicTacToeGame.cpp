@@ -8,7 +8,7 @@ bool TicTacToeGame::playTurn(Player p)
 	cout << p.getName() << " Turn!" << endl;
 TRYAGAIN:
 	//X-Coordinate
-	cout <<"Enter the X-Coordinate of where you wish to place your marker: ";
+	cout << "Enter the X-Coordinate of where you wish to place your marker: ";
 	Xposition = getInt();
 	Xposition -= 1;
 	if (Xposition + 1 > _board_height || Xposition < 0)
@@ -33,8 +33,20 @@ TRYAGAIN:
 
 	//Put Symbol in the right place in board
 	board[Xposition][Yposition] = p.getSymbol();
+	UndoParameters ToPush;
+	ToPush.SetPlayer(p);
+	ToPush.SetX(Xposition);
+	ToPush.SetY(Yposition);
+	UndoStack.push(ToPush);
 
 	//return hasWonDiagonaly(x,y) || hasWonVertically(x,y) || hasWonHorizontally(x,y)
 	return (hasWonDiagonalyRight(Xposition, Yposition) || hasWonDiagonalyLeft(Xposition, Yposition) ||
 		hasWonVertically(Xposition, Yposition) || hasWonHorizontally(Xposition, Yposition));
+}
+Player TicTacToeGame::Undo()
+{
+	board[UndoStack.top().GetX()][UndoStack.top().GetY()] = ' ';
+	Player temp = UndoStack.top().GetPlayer();
+	UndoStack.pop();
+	return temp;
 }

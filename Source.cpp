@@ -109,7 +109,7 @@ SOLO_MULTI:
 			markers_number = getInt();
 			if (markers_number < 3 || markers_number > min(board_width, board_height))
 			{
-				cout << "Enter a number between 3 and " << min(board_width, board_height) << ")" << endl;
+				cout << "Invalid number, please enter a number between 3 and " << min(board_width, board_height) << ")" << endl;
 				goto MarkerInput;
 			}
 		}
@@ -117,7 +117,7 @@ SOLO_MULTI:
 		//playerdata
 	PlayerData:
 		int max_players = ((board_width * board_height) / markers_number);
-		cout << "Enter number of players: (Enter a number between 2 and " << max_players << ")" << endl;
+		cout << "Enter number of players: (Enter a number between 2 and " << max_players << ")" << endl;;
 		number_players = getInt();
 		if (number_players > max_players|| number_players < 2)
 		{
@@ -132,7 +132,7 @@ SOLO_MULTI:
 
 		if (gameNo == 2)
 			b = new Connect4Game(board_width, board_height, players);
-		//stat
+		//srtat
 		b->startGame();
 		cout << endl << endl << endl;
 	}

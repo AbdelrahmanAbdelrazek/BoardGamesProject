@@ -23,7 +23,7 @@ char getChar() {
 	while (true) {
 		getline(cin, input);
 		stringstream myStream(input);
-		if (size(input) == 1 && myStream >> c)
+		if (input.size() == 1 && myStream >> c)
 			break;
 		cout << "Invalid charcter, please try again" << endl;
 	}

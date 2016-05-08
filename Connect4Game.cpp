@@ -22,7 +22,19 @@ TRYAGAIN:
 	//Put Symbol in the right place in board
 	int row = _columns_counters[column]++;
 	board[column][row] = p.getSymbol();
-
+	UndoParameters ToPush;
+	ToPush.SetPlayer(p);
+	ToPush.SetX(column);
+	ToPush.SetY(row);
+	UndoStack.push(ToPush);
 	return hasWonDiagonalyRight(column, row) || hasWonDiagonalyLeft(column, row) ||
 		hasWonVertically(column, row) || hasWonHorizontally(column, row);
+}
+Player Connect4Game::Undo()
+{
+	board[UndoStack.top().GetX()][UndoStack.top().GetY()] = ' ';
+	_columns_counters[UndoStack.top().GetX()]--;
+	Player temp = UndoStack.top().GetPlayer();
+	UndoStack.pop();
+	return temp;
 }

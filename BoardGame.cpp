@@ -1,5 +1,6 @@
 #include "BoardGame.h"
-
+#include "Sorting Functions.h"
+#include "Input.h"
 
 BoardGame::BoardGame(int board_width, int board_height, int no_consecutive_markers_to_win, list<Player> players)
 {
@@ -148,7 +149,7 @@ void BoardGame::printBoard()
 		cout << string((_board_width * 4 + 3), '-') << endl;
 		//print row
 		cout << string(SPACING, ' ');
-		cout << (row < 9? " " : "")  << row + 1 << '|';
+		cout << (row < 9 ? " " : "") << row + 1 << '|';
 		for (int column = 0; column < _board_width; column++) {
 			cout << " " << board[column][row] << " |";
 		}
@@ -161,7 +162,7 @@ void BoardGame::printBoard()
 	cout << string(SPACING, ' ');
 	cout << "  |";
 	for (int i = 0; i < _board_width; i++)
-		cout << " " << i + 1 << (i < 9 ? " " : "")  << "|";
+		cout << " " << i + 1 << (i < 9 ? " " : "") << "|";
 	cout << endl << endl;
 }
 
@@ -171,6 +172,26 @@ void BoardGame::startGame()
 	int turns_counter = 0;
 	printBoard();
 	while (true) {
+		//giving option to undo
+		if (!UndoStack.empty())
+		{
+			cout << "Press U to Undo anything else to continue :" << endl;
+			char choice;
+			choice = getChar();
+			if (choice == 'u' || choice == 'U')
+			{
+				Player GivingTurn = Undo();
+				printBoard();
+				for (it = _players.begin(); it != _players.end(); ++it)
+				{
+					if (GivingTurn.getName() == it->getName())
+					{
+						break;
+					}
+				}
+			}
+		}
+
 		//checks if number of plays is equal to number of places in the board
 		if (turns_counter >= _board_width *_board_height) {
 			cout << "Game ended in tie" << endl;
@@ -183,11 +204,46 @@ void BoardGame::startGame()
 		if (playTurn(*it)) {
 			printBoard();
 			cout << (*it).getName() << " Won!" << endl;
+			SetHighScore(*it, turns_counter);
 			break;
 		}
 		printBoard();
 		turns_counter++;
 		it++;
 	}
+}
+void BoardGame::SetHighScore(Player Winner, int TurnsToWin)
+{
+	HighScore a;
+	a.SetScore(TurnsToWin);
+	a.SetPlayer(Winner.getName());
+	HighScoresList.push_back(a);
+	HighScoresList.sort(SortHighScores);
+	SaveHighScoresToFile();
+}
+void BoardGame::LoadHighScoreFromFile()
+{
+	string line;
+	fstream HighScoreFile("HighScores.txt", fstream::in | fstream::out | fstream::app);
+	HighScore ToPush;
+	while (getline(HighScoreFile, line))
+	{
+		ToPush.SetPlayer(line.substr(0, line.find(' ')));
+		line.erase(0, line.find(' ') + 1);
+		ToPush.SetScore(stoi(line));
+		HighScoresList.push_back(ToPush);
+	}
+}
+void BoardGame::SaveHighScoresToFile()
+{
+	fstream HighScoreFile("HighScores.txt", fstream::in | fstream::out | fstream::trunc);
+	for (list<HighScore>::iterator i = HighScoresList.begin(); i != HighScoresList.end(); ++i)
+	{
+		HighScoreFile << i->GetPlayer() << " " << i->GetScore() << endl;
+	}
+}
+void BoardGame::PrintHighScores()
+{
+	fstream HighScoreFile("HighScores.txt", fstream::in | fstream::out | fstream::app);
 }
 

@@ -10,4 +10,5 @@ public:
 	Player(const string &name, char symbol) :_name{ name }, _symbol{ symbol } {}
 	string getName() { return _name; }
 	char getSymbol() { return _symbol; }
+	Player() {}
 };
