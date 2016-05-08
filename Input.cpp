@@ -16,3 +16,16 @@ int getInt() {
 	}
 	return number;
 }
+
+char getChar() {
+	string input;
+	char c;
+	while (true) {
+		getline(cin, input);
+		stringstream myStream(input);
+		if (size(input) == 1 && myStream >> c)
+			break;
+		cout << "Invalid charcter, please try again" << endl;
+	}
+		return c;
+}
