@@ -31,16 +31,13 @@ bool BoardGame::hasWonDiagonalyLeft(int x, int y)
 		else
 			count++;
 	}
-
 	if (has_won)
 		return true;
-
 	j = y - 1;
 	for (int i = x + 1; i < x + _no_consecutive_markers_to_win - count; i++, j--) {
 		if (i >= _board_width || j < 0 || board[x][y] != board[i][j] || board[i][j] == ' ')
 			return false;
 	}
-
 	return true;
 }
 
@@ -182,16 +179,13 @@ void BoardGame::startGame()
 			{
 				Player GivingTurn = Undo();
 				printBoard();
-				for (it = _players.begin(); it != _players.end(); ++it)
-				{
-					if (GivingTurn.getName() == it->getName())
-					{
-						break;
-					}
-				}
+				//gives turn to the appropiate player
+				if (it == _players.begin()) // if the turn was at the first player in the list
+					it = prev(_players.end()); //turn goes to the last player in the list
+				else
+					it--; //turn goes to the previous player
 			}
 		}
-
 		//checks if number of plays is equal to number of places in the board
 		if (turns_counter >= _board_width *_board_height) {
 			cout << "Game ended in tie" << endl;
